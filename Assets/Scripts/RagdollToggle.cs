@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -25,11 +26,12 @@ public class RagdollToggle : MonoBehaviour
     }
 
     private bool isOn = false;
+    public bool IsOn => isOn;
 
     private readonly List<BodyPartCombo> bodyParts = new List<BodyPartCombo>();
 
     private bool isLerpingBack = false;
-
+    
     void Start()
     {
         var spriteSkins = GetComponentsInChildren<SpriteSkin>();
@@ -39,7 +41,7 @@ public class RagdollToggle : MonoBehaviour
             var joint = skin.gameObject.GetComponent<HingeJoint2D>();
 
             body.simulated = false;
-
+            
             var obj = new BodyPartCombo
             {
                 GameObject = skin.gameObject,
@@ -59,15 +61,7 @@ public class RagdollToggle : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            ToggleSpriteSkins();
-        }
-    }
-
-    private void ToggleSpriteSkins()
+    public void Toggle(Action outerToggle = null)
     {
         if (isLerpingBack) return;
 
@@ -78,10 +72,11 @@ public class RagdollToggle : MonoBehaviour
         if (!isOn)
         {
             isLerpingBack = true;
-            StartCoroutine(LerpBack());
+            StartCoroutine(LerpBack(outerToggle));
         }
         else
         {
+            outerToggle?.Invoke();
             foreach (var bp in bodyParts)
             {
                 bp.Skin.enabled = false;
@@ -90,7 +85,7 @@ public class RagdollToggle : MonoBehaviour
         }
     }
 
-    public IEnumerator LerpBack()
+    private IEnumerator LerpBack(Action outerToggle = null)
     {
         var duration = 0.25f;
         var current = Time.time;
@@ -120,11 +115,13 @@ public class RagdollToggle : MonoBehaviour
 
         foreach (var bp in bodyParts)
         {
-            bp.RigidBody.gravityScale = 1;
             bp.RigidBody.simulated = false;
+            bp.RigidBody.gravityScale = 1;
             bp.Skin.enabled = true;
         }
 
         isLerpingBack = false;
+
+        outerToggle?.Invoke();
     }
 }

@@ -1,27 +1,28 @@
-﻿using UnityEngine;
-
-public interface IInputSource
-{
-
-}
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject rootSprite;
 
     public InputSource inputSource;
-    public float moveSpeed;
+    public float acceleration;
+    public float maxVelocity;
 
     public Vector2 currentForce;
+    public Vector2 currentVelocity;
 
     public Vector2 direction;
-    public float addForce;
+    public Vector2 addForce;
 
-    private Rigidbody2D spriteBody;
+    private Rigidbody2D body;
+    private RagdollToggle ragdollToggle;
 
     void Start()
     {
-        spriteBody = GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
+
+        ragdollToggle = GetComponentInChildren<RagdollToggle>();
     }
 
     void Update()
@@ -29,9 +30,24 @@ public class PlayerController : MonoBehaviour
         inputSource.Update();
 
         direction = inputSource.DirectionInput;
-        addForce = direction.x * moveSpeed;
-        spriteBody.AddForce(transform.forward * addForce, ForceMode2D.Force);
-        spriteBody.totalForce = new Vector2(Mathf.Clamp(spriteBody.totalForce.x, -1, 1), spriteBody.totalForce.y);
-        currentForce = spriteBody.totalForce;
+        addForce = direction * acceleration;
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            ragdollToggle.Toggle(() =>
+            {
+                body.simulated = !ragdollToggle.IsOn;
+            });
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        body.AddForce(addForce, ForceMode2D.Force);
+        body.velocity = Vector2.ClampMagnitude(body.velocity, maxVelocity);
+
+        currentForce = body.totalForce;
+        currentVelocity = body.velocity;
+
     }
 }
