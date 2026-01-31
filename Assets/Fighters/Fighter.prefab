@@ -459,6 +459,7 @@ GameObject:
   - component: {fileID: 6915932477591530007}
   - component: {fileID: 106792666646703474}
   - component: {fileID: 2172916431823860072}
+  - component: {fileID: 8146509996783610742}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Untagged
@@ -516,7 +517,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainContainer: {fileID: 4786266136358292036}
-  spriteSheet: {fileID: -8653719598885068355, guid: f9bf8052668ab7242b9ee1de34862bcf, type: 3}
+  spriteSheet: {fileID: -8653719598885068355, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
+--- !u!114 &8146509996783610742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5898470495758642363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15346fa30a122448b36489b8c970438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootSprite: {fileID: 6786851957619538502}
+  rootBone: {fileID: 6648772550265701655}
+  inputSource: {fileID: 0}
+  moveSpeed: 0.2
+  currentForce: {x: 0, y: 0}
 --- !u!1 &6596926946851879972
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8738085734723553034, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6861881
+      value: 0.6861886
       objectReference: {fileID: 0}
     - target: {fileID: -8738085734723553034, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -578,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8738085734723553034, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7274242
+      value: 0.7274237
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_Name
@@ -606,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7861339156444622807, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.65799606
+      value: 0.65799737
       objectReference: {fileID: 0}
     - target: {fileID: -7861339156444622807, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.y
@@ -614,7 +632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7861339156444622807, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7530213
+      value: -0.7530203
       objectReference: {fileID: 0}
     - target: {fileID: -7827520356479729012, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_Layer
@@ -698,11 +716,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5637132306643039670, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9992217
+      value: 0.9992216
       objectReference: {fileID: 0}
     - target: {fileID: -5637132306643039670, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0394467
+      value: 0.039447818
       objectReference: {fileID: 0}
     - target: {fileID: -5558108231389277625, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -770,7 +788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2692081024614513165, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99892545
+      value: 0.9989253
       objectReference: {fileID: 0}
     - target: {fileID: -2692081024614513165, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -782,7 +800,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2692081024614513165, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.04634683
+      value: -0.046348494
+      objectReference: {fileID: 0}
+    - target: {fileID: -1406736754831263328, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.47
       objectReference: {fileID: 0}
     - target: {fileID: -867130626764760922, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -794,7 +816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -597868678099845260, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.65260893
+      value: 0.65260965
       objectReference: {fileID: 0}
     - target: {fileID: -597868678099845260, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.y
@@ -802,7 +824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -597868678099845260, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.75769496
+      value: -0.7576943
       objectReference: {fileID: 0}
     - target: {fileID: 22585932203318843, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_Layer
@@ -822,11 +844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 754821248205517170, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9983761
+      value: 0.998376
       objectReference: {fileID: 0}
     - target: {fileID: 754821248205517170, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.056967366
+      value: 0.056967992
       objectReference: {fileID: 0}
     - target: {fileID: 1217571745909960382, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -842,7 +864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1392188409492809968, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99393296
+      value: 0.99393284
       objectReference: {fileID: 0}
     - target: {fileID: 1392188409492809968, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -854,7 +876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1392188409492809968, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.10998754
+      value: -0.10998849
       objectReference: {fileID: 0}
     - target: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_Layer
@@ -886,7 +908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2778244409379772180, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 3260460318106379646, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_SortingOrder
@@ -894,7 +916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3794648634915916422, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.70698464
+      value: -0.7069854
       objectReference: {fileID: 0}
     - target: {fileID: 3794648634915916422, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -906,7 +928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3794648634915916422, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7072289
+      value: -0.7072282
       objectReference: {fileID: 0}
     - target: {fileID: 4819489985376136585, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -954,7 +976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7011139129890068381, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.145
+      value: -0.19
       objectReference: {fileID: 0}
     - target: {fileID: 7011139129890068381, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -998,15 +1020,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8223506752500276790}
-    - targetCorrespondingSourceObject: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3346723514684343244}
-    - targetCorrespondingSourceObject: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8281261638820253329}
-    - targetCorrespondingSourceObject: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 52128269968112346}
     - targetCorrespondingSourceObject: {fileID: 22585932203318843, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2308390550052282639}
@@ -1061,6 +1074,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5256976553281666438, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6052764760703646692}
+    - targetCorrespondingSourceObject: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3346723514684343244}
+    - targetCorrespondingSourceObject: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8281261638820253329}
+    - targetCorrespondingSourceObject: {fileID: 1596357972171728719, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 52128269968112346}
     - targetCorrespondingSourceObject: {fileID: 1991797798123803071, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 764157358572007238}
@@ -1133,6 +1155,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1859664517423967982, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8248379201079322221}
+    - targetCorrespondingSourceObject: {fileID: 1859664517423967982, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8534862000205226705}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
 --- !u!4 &443939452272142563 stripped
 Transform:
@@ -1207,8 +1232,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.15148056, y: 0.51085037}
-    oldSize: {x: 0.78125, y: 0.34375}
-    newSize: {x: 0.78125, y: 0.34375}
+    oldSize: {x: 0.78125, y: 0.40625}
+    newSize: {x: 0.78125, y: 0.40625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1237,7 +1262,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.6281446, y: -0.20746994}
+  m_ConnectedAnchor: {x: 0.6149818, y: -0.2132566}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1319,8 +1344,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.62590766, y: 0.89740473}
-    oldSize: {x: 0.46875, y: 0.6875}
-    newSize: {x: 0.46875, y: 0.6875}
+    oldSize: {x: 0.53125, y: 0.75}
+    newSize: {x: 0.53125, y: 0.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1349,7 +1374,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.0033996105, y: -0.6178765}
+  m_ConnectedAnchor: {x: 0.005897522, y: -0.61077833}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1456,8 +1481,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.12605134, y: 0.49724093}
-    oldSize: {x: 0.78125, y: 0.34375}
-    newSize: {x: 0.78125, y: 0.34375}
+    oldSize: {x: 0.84375, y: 0.40625}
+    newSize: {x: 0.84375, y: 0.40625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1486,7 +1511,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.556779, y: -0.19308615}
+  m_ConnectedAnchor: {x: 0.54999447, y: -0.2011571}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1585,8 +1610,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.09287409, y: 0.64441335}
-    oldSize: {x: 0.40625, y: 0.34375}
-    newSize: {x: 0.40625, y: 0.34375}
+    oldSize: {x: 0.46875, y: 0.40625}
+    newSize: {x: 0.46875, y: 0.40625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1615,7 +1640,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.606886, y: -0.047837734}
+  m_ConnectedAnchor: {x: 0.61269057, y: -0.039489985}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1702,8 +1727,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.35672364, y: 0.05373047}
-    oldSize: {x: 0.65625, y: 0.78125}
-    newSize: {x: 0.65625, y: 0.78125}
+    oldSize: {x: 0.71875, y: 0.84375}
+    newSize: {x: 0.71875, y: 0.84375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1733,7 +1758,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.1985903, y: 1.055628}
+  m_ConnectedAnchor: {x: -0.2138709, y: 1.262835}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1810,8 +1835,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.47715455, y: 0.7838318}
-    oldSize: {x: 0.6875, y: 0.9375}
-    newSize: {x: 0.6875, y: 0.9375}
+    oldSize: {x: 0.75, y: 1}
+    newSize: {x: 0.75, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1842,7 +1867,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.30788565, y: -0.16567683}
+  m_ConnectedAnchor: {x: 0.3010335, y: -0.16048062}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1884,7 +1909,6 @@ MonoBehaviour:
   - {fileID: 8420661208224570998}
   - {fileID: 5494481308125870637}
   - {fileID: 6671632369955871381}
-  - {fileID: 0}
   m_Weight: 1
   m_SolverEditorData:
   - color: {r: 0, g: 1, b: 0, a: 1}
@@ -1899,6 +1923,33 @@ MonoBehaviour:
     showGizmo: 1
   - color: {r: 0, g: 1, b: 0, a: 1}
     showGizmo: 1
+--- !u!50 &8534862000205226705
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648772550265701655}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6702925576839110147 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1769465101944927738, guid: a170c9f10bdc1174fbc63352eb4d7b5c, type: 3}
@@ -1967,8 +2018,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.6012128, y: 0.036352757}
-    oldSize: {x: 1.1875, y: 1.34375}
-    newSize: {x: 1.1875, y: 1.34375}
+    oldSize: {x: 1.25, y: 1.75}
+    newSize: {x: 1.25, y: 1.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1997,7 +2048,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.03753209, y: 0.023329854}
+  m_ConnectedAnchor: {x: 0.03843367, y: -0.22431242}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2074,8 +2125,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.19809237, y: 0.41214532}
-    oldSize: {x: 0.6875, y: 0.3125}
-    newSize: {x: 0.6875, y: 0.3125}
+    oldSize: {x: 0.75, y: 0.375}
+    newSize: {x: 0.75, y: 0.375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2104,7 +2155,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.14966667, y: -0.5352099}
+  m_ConnectedAnchor: {x: -0.1795665, y: -0.5641329}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2181,8 +2232,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5867871, y: 0.70069224}
-    oldSize: {x: 1.3125, y: 0.75}
-    newSize: {x: 1.3125, y: 0.75}
+    oldSize: {x: 1.375, y: 0.8125}
+    newSize: {x: 1.375, y: 0.8125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2263,8 +2314,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.23460568, y: 0.62637687}
-    oldSize: {x: 0.84375, y: 0.53125}
-    newSize: {x: 0.84375, y: 0.53125}
+    oldSize: {x: 0.90625, y: 0.59375}
+    newSize: {x: 0.90625, y: 0.59375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2293,7 +2344,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.015258431, y: 1.0651637}
+  m_ConnectedAnchor: {x: -0.0076545477, y: 1.3081613}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2370,8 +2421,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.13827515, y: 0.6933337}
-    oldSize: {x: 0.40625, y: 0.34375}
-    newSize: {x: 0.40625, y: 0.34375}
+    oldSize: {x: 0.46875, y: 0.40625}
+    newSize: {x: 0.46875, y: 0.40625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2400,7 +2451,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.5826967, y: -0.057593107}
+  m_ConnectedAnchor: {x: 0.58346057, y: -0.04533744}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2477,8 +2528,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.17016202, y: 0.40780336}
-    oldSize: {x: 0.6875, y: 0.3125}
-    newSize: {x: 0.6875, y: 0.3125}
+    oldSize: {x: 0.75, y: 0.375}
+    newSize: {x: 0.75, y: 0.375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2507,7 +2558,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.1451577, y: -0.5520272}
+  m_ConnectedAnchor: {x: -0.1736418, y: -0.5826273}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2589,8 +2640,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.481009, y: 0.75525284}
-    oldSize: {x: 0.6875, y: 0.9375}
-    newSize: {x: 0.6875, y: 0.9375}
+    oldSize: {x: 0.75, y: 1}
+    newSize: {x: 0.75, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2621,7 +2672,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.43946433, y: -0.1924696}
+  m_ConnectedAnchor: {x: -0.44607556, y: -0.18905962}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2698,8 +2749,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.67649096, y: 0.8749168}
-    oldSize: {x: 0.46875, y: 0.6875}
-    newSize: {x: 0.46875, y: 0.6875}
+    oldSize: {x: 0.53125, y: 0.75}
+    newSize: {x: 0.53125, y: 0.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2728,7 +2779,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.017661452, y: -0.60654426}
+  m_ConnectedAnchor: {x: 0.029879093, y: -0.5990653}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2815,8 +2866,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.21060683, y: 0.60343486}
-    oldSize: {x: 0.84375, y: 0.53125}
-    newSize: {x: 0.84375, y: 0.53125}
+    oldSize: {x: 0.90625, y: 0.59375}
+    newSize: {x: 0.90625, y: 0.59375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2845,7 +2896,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.5049906, y: 0.9279758}
+  m_ConnectedAnchor: {x: -0.52940357, y: 1.1695395}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
