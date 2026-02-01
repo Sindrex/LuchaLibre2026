@@ -146,6 +146,8 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log(name + " Received Ragdoll trigger");
 
+        SendMessageUpwards("Hit", new Tuple<PlayerController, int>(this, 10), SendMessageOptions.DontRequireReceiver);
+
         foreach (var child in rootSprite.GetComponentsInChildren<Collider2D>())
         {
             foreach (var otherChild in opponent.rootSprite.GetComponentsInChildren<Collider2D>())
