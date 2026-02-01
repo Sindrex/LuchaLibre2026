@@ -24,6 +24,10 @@ public class KeybordInputSource : InputSource
         {
             ActionInput = FighterAction.Punch;
         }
+        else if (Input.GetKey(KeyCode.U))
+        {
+            ActionInput = FighterAction.Unmask;
+        }
         else
         {
             ActionInput = FighterAction.None;

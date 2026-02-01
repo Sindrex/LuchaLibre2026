@@ -12,5 +12,6 @@ public enum FighterAction
     None,
     GrabThrow,
     GrabThrowMiss,
+    Unmask,
     Punch
 }
