@@ -85,22 +85,26 @@ public class MenuManager : MonoBehaviour
             {
                 Player1Character1 = false;
                 Player1Picker.transform.localPosition = Character2Position;
+                AudioManager.Instance.PlaySFXClip(AudioLabel.SwapMenuSFX);
             }
             else if (InputController.GetInput(InputPurpose.P1_MOVE_LEFT) && !Player1Character1)
             {
                 Player1Character1 = true;
                 Player1Picker.transform.localPosition = Character1Position;
+                AudioManager.Instance.PlaySFXClip(AudioLabel.SwapMenuSFX);
             }
 
             if (InputController.GetInput(InputPurpose.P2_MOVE_RIGHT) && Player2Character1)
             {
                 Player2Character1 = false;
                 Player2Picker.transform.localPosition = Character2Position;
+                AudioManager.Instance.PlaySFXClip(AudioLabel.SwapMenuSFX);
             }
             else if (InputController.GetInput(InputPurpose.P2_MOVE_LEFT) && !Player2Character1)
             {
                 Player2Character1 = true;
                 Player2Picker.transform.localPosition = Character1Position;
+                AudioManager.Instance.PlaySFXClip(AudioLabel.SwapMenuSFX);
             }
 
             if (InputController.GetInput(InputPurpose.START_GAME))
