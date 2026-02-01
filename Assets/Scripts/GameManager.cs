@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text Round;
     public GameObject Fight;
     public GameObject UnmaskHim;
+    public GameObject Maskality;
     public TMP_Text Timer;
     private float TimerTicker;
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     public bool GameStarted;
     public bool IsInFight;
+    public bool IsInMaskality;
     public bool IsFinished;
 
     //player HP
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         RoundObject.SetActive(false);
         Fight.SetActive(false);
         UnmaskHim.SetActive(false);
+        Maskality.SetActive(false);
         Timer.gameObject.SetActive(true);
         Player1HPObject.SetActive(true);
         Player2HPObject.SetActive(true);
@@ -84,7 +87,9 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentRound = 0;
+        GameStarted = false;
         IsInFight = false;
+        IsInMaskality = false;
     }
 
     // Update is called once per frame
@@ -92,43 +97,51 @@ public class GameManager : MonoBehaviour
     {
         if (IsInFight)
         {
-            //TEST
-            if (InputController.GetInput(InputPurpose.P1_PUNCH_1))
-            {
-                Player2HP--;
-            }
-            if (InputController.GetInput(InputPurpose.P2_PUNCH_1))
-            {
-                Player1HP--;
-            }
-
-            //set HP width
-            var player1HPwidth = PlayerHPWidths[Player1HP];
-            Player1HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player1HPwidth, 15);
-            var player2HPwidth = PlayerHPWidths[Player2HP];
-            Player2HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player2HPwidth, 15);
-
-            //Round ends by timer
-            TimerTicker -= Time.deltaTime;
-            Timer.text = Mathf.RoundToInt(TimerTicker).ToString();
-            if(TimerTicker <= 0)
-            {
-                EndRound();
-            }
-
-            //Round ends by no HP
-            if(Player1HP == 0 || Player2HP == 0)
-            {
-                EndRound();
-            }
+            UpdatePlayerHPs();
         }
 
-        if (IsFinished)
+        //test
+        if (IsInMaskality && InputController.GetInput(InputPurpose.START_GAME))
         {
-            if (InputController.GetInput(InputPurpose.START_GAME))
-            {
-                SceneManager.LoadScene(0);
-            }
+            EndGame();
+        }
+
+        if (IsFinished && InputController.GetInput(InputPurpose.START_GAME))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    public void UpdatePlayerHPs()
+    {
+        //TEST
+        if (InputController.GetInput(InputPurpose.P1_PUNCH_1))
+        {
+            Player2HP -= 10;
+        }
+        if (InputController.GetInput(InputPurpose.P2_PUNCH_1))
+        {
+            Player1HP -= 10;
+        }
+
+        //set HP width
+        var player1HPwidth = PlayerHPWidths[Player1HP/10];
+        Player1HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player1HPwidth, 15);
+        var player2HPwidth = PlayerHPWidths[Player2HP/10];
+        Player2HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player2HPwidth, 15);
+
+        //Round ends by timer
+        TimerTicker -= Time.deltaTime;
+        Timer.text = Mathf.RoundToInt(TimerTicker).ToString();
+        if(TimerTicker <= 0)
+        {
+            EndRound();
+        }
+
+        //Round ends by no HP
+        if(Player1HP == 0 || Player2HP == 0)
+        {
+            EndRound();
         }
     }
 
@@ -195,33 +208,46 @@ public class GameManager : MonoBehaviour
         IsInFight = false;
         AudioManager.Instance.PlaySFXClip(AudioLabel.BellSFX);
 
+        //A player has won
         if(Player1RoundsWon == MaxRound/2 + 1)
         {
-            EndGame();
+            EndGameMaskality();
             return;
         }
         else if(Player2RoundsWon == MaxRound/2 + 1)
         {
-            EndGame();
+            EndGameMaskality();
             return;
         }
         else if(CurrentRound == MaxRound)
         {
-            EndGame();
+            EndGameMaskality();
             return;
         }
 
         NextRound();
     }
 
+    public void EndGameMaskality()
+    {
+        IsInMaskality = true;
+        UnmaskHim.SetActive(true);
+        AudioManager.Instance.PlaySFXClip(AudioLabel.UnmaskHimSFX);
+        //opponent freezes
+        //winner punches/unmasks opponent one more time -> EndGame
+    }
+
     public void EndGame()
     {
+        UnmaskHim.SetActive(false);
+        Maskality.SetActive(true);
+        AudioManager.Instance.PlaySFXClip(AudioLabel.MaskalitySFX);
         StartCoroutine(EndGameWait());
     }
 
     IEnumerator EndGameWait()
     {
-        yield return new WaitForSeconds(FightWaitSeconds);
+        yield return new WaitForSeconds(NextRoundWaitSeconds);
         if(Player1RoundsWon > Player2RoundsWon)
         {
             Player1Wins.gameObject.SetActive(true);
@@ -232,7 +258,11 @@ public class GameManager : MonoBehaviour
         }
 
         AudioManager.Instance.PlaySFXClip(AudioLabel.VictoryVoice);
+        AudioManager.Instance.PlaySFXClip(AudioLabel.ApplauseSFX);
+        AudioManager.Instance.PlaySFXClip(AudioLabel.ApplauseSFX);
+        Maskality.SetActive(false);
         Restart.SetActive(true);
+        IsInMaskality = false;
         IsFinished = true;
     }
 }

@@ -31,7 +31,7 @@ public static class InputController
             case InputPurpose.P1_MOVE_RIGHT:
                 return Input.GetKey(KeyCode.D);
             case InputPurpose.P1_PUNCH_1:
-                return Input.GetKeyDown(KeyCode.F);
+                return Input.GetKeyDown(KeyCode.O);
             case InputPurpose.P2_MOVE_UP:
                 return Input.GetKey(KeyCode.UpArrow);
             case InputPurpose.P2_MOVE_DOWN:
@@ -41,7 +41,7 @@ public static class InputController
             case InputPurpose.P2_MOVE_RIGHT:
                 return Input.GetKey(KeyCode.RightArrow);
             case InputPurpose.P2_PUNCH_1:
-                return Input.GetKeyDown(KeyCode.RightControl);
+                return Input.GetKeyDown(KeyCode.P);
             case InputPurpose.ANY:
                 return Input.anyKeyDown;
             case InputPurpose.QUIT:
