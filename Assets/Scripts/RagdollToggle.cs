@@ -8,6 +8,11 @@ using UnityEngine;
 using UnityEngine.U2D.Animation;
 public class RagdollToggle : MonoBehaviour
 {
+    /*
+     * Her er det helt sikkert masse mere greier vi kan slette.
+     * Cluet ligger i å oppdatere transform til bone + initial offset.
+     */
+
     public class BodyPartCombo
     {
         public GameObject GameObject { get; set; }
@@ -16,11 +21,17 @@ public class RagdollToggle : MonoBehaviour
         public Rigidbody2D Body { get; set; }
         public Collider2D Collider { get; set; }
 
+        public Vector2 PositionOffset { get; set; }
+        public float AngleOffset { get; set; }
+
         public Vector2 TransformPosition { get; set; }
         public float TransformAngle { get; set; }
 
-        public Vector2 BodyPosition { get; set; }
-        public float BodyAngle { get; set; }
+        public Vector2 InitialBodyPosition { get; set; }
+        public float InitialBodyAngle { get; set; }
+
+        public Vector2 AnimatedBodyPosition { get; set; }
+        public float AnimatedBodyAngle { get; set; }
 
         public Vector2 EndSimBodyPosition { get; set; }
         public float EndSimBodyAngle { get; set; }
@@ -37,10 +48,16 @@ public class RagdollToggle : MonoBehaviour
 
     private bool isLerpingBack = false;
 
-    private Rigidbody2D root;
+    private bool shouldLog = false;
+
+    public Vector2[] initialOffsets;
+
+    public BodyPartCombo[] allCombos;
 
     void Start()
     {
+        shouldLog = transform.parent.name == "Fighter A";
+
         var log = new StringBuilder();
 
         var spriteSkins = GetComponentsInChildren<SpriteSkin>();
@@ -52,52 +69,65 @@ public class RagdollToggle : MonoBehaviour
             body.simulated = false;
 
             if (body.gameObject.name == "Pelvis")
-            {
-                root = body;
-            }
+                log.AppendLine($"{body.gameObject.name} starts at {body.position} ({body.rotation})");
 
-            log.AppendLine($"{body.gameObject.name} starts at {body.position} ({body.rotation})");
-
+            var collider = skin.gameObject.GetComponent<Collider2D>();
             var part = new BodyPartCombo
             {
                 GameObject = skin.gameObject,
 
+                PositionOffset = body.position - (Vector2)skin.boneTransforms[0].position,
+                AngleOffset = body.rotation - skin.boneTransforms[0].rotation.eulerAngles.z,
+
                 TransformPosition = body.transform.position,
-                TransformAngle = body.transform.rotation.z,
+                TransformAngle = body.transform.rotation.eulerAngles.z,
 
                 Body = body,
-                BodyPosition = body.position,
-                BodyAngle = body.rotation,
+                InitialBodyPosition = body.position,
+                InitialBodyAngle = body.rotation,
+                AnimatedBodyPosition = body.position,
+                AnimatedBodyAngle = body.rotation,
 
                 Skin = skin,
+
                 BonePosition = skin.boneTransforms[0].position,
-                BoneAngle = skin.boneTransforms[0].rotation.z,
+                BoneAngle = skin.boneTransforms[0].rotation.eulerAngles.z,
 
                 Joint = joint,
-                Collider = skin.gameObject.GetComponent<Collider2D>()
+                Collider = collider
             };
+
+            
             bodyParts.Add(part);
         }
 
-        Debug.Log(log.ToString());
+        initialOffsets = bodyParts.Select(x => x.PositionOffset).ToArray();
+        allCombos = bodyParts.ToArray();
+
+        if (shouldLog)
+            Debug.Log(log.ToString());
     }
 
-    //void Update()
-    //{
-    //    if (isOn || isLerpingBack) return;
-    //    foreach (var part in bodyParts)
-    //    {
-    //        part.BodyPosition = part.Body.position;
-    //        part.BodyAngle = part.Body.rotation;
-    //    }
-    //}
+    void Update()
+    {
+        foreach (var part in bodyParts)
+        {
+            if (!part.Body.simulated) {
+                
+                part.AnimatedBodyPosition = part.Skin.boneTransforms[0].position + (Vector3)part.PositionOffset;
+
+                part.AnimatedBodyAngle = part.Skin.boneTransforms[0].rotation.eulerAngles.z + part.AngleOffset;
+
+                part.GameObject.transform.position = part.AnimatedBodyPosition;
+                part.GameObject.transform.rotation = Quaternion.Euler(0, 0, part.AnimatedBodyAngle);
+            }
+        }
+    }
 
     public void Toggle(Action outerToggle = null, Action<Vector2> setOuterPosition = null)
     {
         if (isLerpingBack) return;
 
-        var spriteSkins = GetComponentsInChildren<SpriteSkin>();
-        Debug.Log($"Toggling SpriteSkins from {!isOn} to {isOn} for {spriteSkins.Length}");
         isOn = !isOn;
 
         if (!isOn)
@@ -107,12 +137,21 @@ public class RagdollToggle : MonoBehaviour
         }
         else
         {
+            var sb = new StringBuilder();
+            
             outerToggle?.Invoke();
             foreach (var bp in bodyParts)
             {
                 bp.Skin.enabled = false;
+
+                if (bp.GameObject.name == "Pelvis")
+                    sb.AppendLine($"{bp.GameObject.name} initialized to {bp.AnimatedBodyPosition} ({bp.AnimatedBodyAngle})");
+
                 bp.Body.simulated = true;
             }
+
+            if (shouldLog)
+                Debug.Log(sb.ToString());
         }
     }
 
@@ -130,10 +169,12 @@ public class RagdollToggle : MonoBehaviour
             bp.EndSimBodyAngle = bp.Body.rotation;
             bp.EndSimBodyPosition = bp.Body.position;
 
-            log.AppendLine($"{bp.GameObject.name} to lerp back from {bp.EndSimBodyPosition} ({bp.EndSimBodyAngle}) to {bp.BodyPosition} ({bp.BodyAngle})");
+            if (bp.GameObject.name == "Pelvis")
+                log.AppendLine($"{bp.GameObject.name} to lerp back from {bp.EndSimBodyPosition} ({bp.EndSimBodyAngle}) to {bp.AnimatedBodyPosition} ({bp.AnimatedBodyAngle})");
         }
 
-        Debug.Log(log.ToString());
+        if (shouldLog)
+            Debug.Log(log.ToString());
 
         while (current < end)
         {
@@ -141,26 +182,32 @@ public class RagdollToggle : MonoBehaviour
 
             foreach (var bp in bodyParts)
             {
-                bp.Body.position = Vector2.Lerp(bp.EndSimBodyPosition, bp.BodyPosition, t);
-                bp.Body.rotation = Mathf.Lerp(bp.EndSimBodyAngle, bp.BodyAngle, t);
+                bp.Body.position = Vector2.Lerp(bp.EndSimBodyPosition, bp.AnimatedBodyPosition, t);
+                bp.Body.rotation = Mathf.Lerp(bp.EndSimBodyAngle, bp.AnimatedBodyAngle, t);
             }
-
-            setOuterPosition?.Invoke(new Vector2(root.position.x, 2));
             
             yield return new WaitForNextFrameUnit();
 
             current = Time.time;
         }
 
+        log.Clear();
+
         foreach (var bp in bodyParts)
         {
-            bp.Body.position = bp.BodyPosition;
-            bp.Body.rotation = bp.BodyAngle;
+            bp.Body.position = bp.AnimatedBodyPosition;
+            bp.Body.rotation = bp.AnimatedBodyAngle;
             bp.Body.simulated = false;
             bp.Body.gravityScale = 1;
             bp.Skin.enabled = true;
+
+            if (bp.GameObject.name == "Pelvis")
+               log.AppendLine($"{bp.GameObject.name} end lerp at {bp.AnimatedBodyPosition} ({bp.AnimatedBodyAngle})");
         }
 
+        if (shouldLog)
+            Debug.Log(log.ToString());
+ 
         isLerpingBack = false;
 
         outerToggle?.Invoke();
