@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -50,6 +51,8 @@ public class GameManager : MonoBehaviour
     public Sprite Character2Sprite;
     public Image Player1Character;
     public Image Player2Character;
+    public PlayerController Player1Controller;
+    public PlayerController Player2Controller;
 
     //Singleton pattern
     public static GameManager Instance;
@@ -109,6 +112,32 @@ public class GameManager : MonoBehaviour
         if (IsFinished && InputController.GetInput(InputPurpose.START_GAME))
         {
             SceneManager.LoadScene(0);
+        }
+    }
+
+    public void Hit(Tuple<PlayerController, int> tuple)
+    {
+        if(tuple.Item1 == Player1Controller)
+        {
+            Player1HP -= tuple.Item2;
+            var list = new List<AudioLabel>()
+            {
+                AudioLabel.Character1Ouch1, AudioLabel.Character1Ouch2, AudioLabel.Character1Ouch3
+            };
+            var randomNumber = new System.Random().Next(0, list.Count - 1);
+            var sfxClip = list[randomNumber];
+            AudioManager.Instance.PlaySFXClip(sfxClip);
+        }
+        else if(tuple.Item1 == Player2Controller)
+        {
+            Player2HP -= tuple.Item2;
+            var list = new List<AudioLabel>()
+            {
+                AudioLabel.Character2Ouch1, AudioLabel.Character2Ouch2, AudioLabel.Character2Ouch3
+            };
+            var randomNumber = new System.Random().Next(0, list.Count - 1);
+            var sfxClip = list[randomNumber];
+            AudioManager.Instance.PlaySFXClip(sfxClip);
         }
     }
 
