@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,6 +44,10 @@ public class GameManager : MonoBehaviour
     public int Player1RoundsWon;
     public int Player2HP;
     public int Player2RoundsWon;
+    public Sprite Character1Sprite;
+    public Sprite Character2Sprite;
+    public Image Player1Character;
+    public Image Player2Character;
 
     //Singleton pattern
     public static GameManager Instance;
@@ -127,10 +132,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    public void StartGame(bool Player1Character1, bool Player2Character1)
     {
         InFightObject.SetActive(true);
         GameStarted = true;
+
+        Player1Character.sprite = Character2Sprite;
+        Player2Character.sprite = Character2Sprite;
+        if (Player1Character1)
+        {
+            Player1Character.sprite = Character1Sprite;
+        }
+        if (Player2Character1)
+        {
+            Player2Character.sprite = Character1Sprite;
+        }
+
         NextRound();
     }
 
