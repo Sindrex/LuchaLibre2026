@@ -11,5 +11,6 @@ public enum FighterAction
 {
     None,
     GrabThrow,
-    GrabThrowMiss
+    GrabThrowMiss,
+    Punch
 }

@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private FighterAction currentAction = FighterAction.None;
     private bool actionInProgress = false;
+    private bool takingDamage = false;
     private Rigidbody2D pelvisBody;
 
     void Start()
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (actionInProgress)
+        if (actionInProgress || takingDamage)
         {
             return;
         }
@@ -50,7 +51,11 @@ public class PlayerController : MonoBehaviour
 
         if (inputSource.ActionInput != FighterAction.None)
         {
-            if (Vector2.Distance(transform.position, opponent.transform.position) < 2f)
+            if 
+            (
+                Vector2.Distance(transform.position, opponent.transform.position) < 2f &&
+                !opponent.actionInProgress
+            )
             {
                 // TODO: Check if opponent is blocking
                 Debug.Log($"{name} attacks {opponent.name}");
@@ -65,7 +70,8 @@ public class PlayerController : MonoBehaviour
                 Debug.Log($"{name} is too far away");
 
                 actionInProgress = true;
-                currentAction = Enum.Parse<FighterAction>(inputSource.ActionInput.ToString() + "Miss");
+                if (!Enum.TryParse(inputSource.ActionInput.ToString() + "Miss", out currentAction))
+                    currentAction = Enum.Parse<FighterAction>(inputSource.ActionInput.ToString());
                 animator.SetTrigger(currentAction.ToString());
             }
 
@@ -90,14 +96,20 @@ public class PlayerController : MonoBehaviour
 
         if (receivedAction == FighterAction.GrabThrow)
         {
+            takingDamage = true;
             StartThrown();
+        }
+        else if (receivedAction == FighterAction.Punch)
+        {
+            takingDamage = true;
+            animator.SetTrigger("Hit");
+            TakeDamage(10);
         }
     }
 
     private void StartThrown()
     {
         animator.SetTrigger("Thrown");
-        actionInProgress = true;
     }
 
     private void FixedUpdate()
@@ -130,6 +142,10 @@ public class PlayerController : MonoBehaviour
             currentAction = FighterAction.None;
             Debug.Log($"{name} reset state");
         }
+        else if (takingDamage && !ragdollToggle.IsOn)
+        {
+            takingDamage = false;
+        }
     }
 
     public void Grab()
@@ -146,7 +162,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log(name + " Received Ragdoll trigger");
 
-        SendMessageUpwards("Hit", new Tuple<PlayerController, int>(this, 10), SendMessageOptions.DontRequireReceiver);
+        TakeDamage(20);
 
         foreach (var child in rootSprite.GetComponentsInChildren<Collider2D>())
         {
@@ -167,6 +183,11 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(FlyABitAndGetUp());
     }
 
+    private void TakeDamage(int damage)
+    {
+        SendMessageUpwards("Hit", new Tuple<PlayerController, int>(this, damage), SendMessageOptions.DontRequireReceiver);
+    }
+
     private IEnumerator FlyABitAndGetUp()
     {
         yield return new WaitForFixedUpdate();
@@ -175,6 +196,10 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
+
+        var xOffset = pelvisBody.transform.position.x - transform.position.x;
+        transform.position = new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z);
+        ragdollToggle.Shift(new Vector2(xOffset, 0));
 
         ragdollToggle.Toggle(() =>
         {
@@ -191,6 +216,6 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"{name} got back up");
 
-        actionInProgress = false;
+        takingDamage = false;
     }
 }
