@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     private bool takingDamage = false;
     private Rigidbody2D pelvisBody;
 
+    private GameManager manager;
+
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -38,32 +40,50 @@ public class PlayerController : MonoBehaviour
         pelvisBody = rootSprite.transform.Find("Pelvis").GetComponent<Rigidbody2D>();
 
         opponent = FindObjectsOfType<PlayerController>().FirstOrDefault(x => x != this);
+
+        manager = FindObjectOfType<GameManager>();
     }
 
     void Update()
     {
-        if (actionInProgress || takingDamage)
+        if (actionInProgress || takingDamage || !manager.GameStarted)
         {
             return;
         }
-        
+
         inputSource.Update();
 
         if (inputSource.ActionInput != FighterAction.None)
         {
-            if 
+            var inRange = Vector2.Distance(transform.position, opponent.transform.position) < 2f;
+            if
             (
-                Vector2.Distance(transform.position, opponent.transform.position) < 2f &&
+                inRange &&
                 !opponent.actionInProgress
             )
             {
-                // TODO: Check if opponent is blocking
                 Debug.Log($"{name} attacks {opponent.name}");
 
                 actionInProgress = true;
                 currentAction = inputSource.ActionInput;
-                animator.SetTrigger(currentAction.ToString());
-                opponent.ReceiveAction(currentAction);
+                if (currentAction == FighterAction.Unmask)
+                {
+                    if (manager.IsInMaskality)
+                    {
+                        animator.SetTrigger(currentAction.ToString());
+                        opponent.ReceiveAction(currentAction);
+                    }
+                    else
+                    {
+                        actionInProgress = false;
+                        currentAction = FighterAction.None;
+                    }
+                }
+                else
+                {
+                    animator.SetTrigger(currentAction.ToString());
+                    opponent.ReceiveAction(currentAction);
+                }
             }
             else
             {
@@ -80,14 +100,6 @@ public class PlayerController : MonoBehaviour
 
         direction = inputSource.DirectionInput;
         addForce = direction * acceleration;
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            ragdollToggle.Toggle(() =>
-            {
-                body.simulated = !ragdollToggle.IsOn;
-            });
-        }
     }
 
     private void ReceiveAction(FighterAction receivedAction)
