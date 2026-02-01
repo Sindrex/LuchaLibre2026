@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -11,7 +12,7 @@ public class RagdollToggle : MonoBehaviour
         public GameObject GameObject { get; set; }
         public SpriteSkin Skin { get; set; }
         public HingeJoint2D Joint { get; set; }
-        public Rigidbody2D RigidBody { get; set; }
+        public Rigidbody2D Body { get; set; }
         public Collider2D Collider { get; set; }
 
         public Vector2 BodyPosition { get; set; }
@@ -31,7 +32,9 @@ public class RagdollToggle : MonoBehaviour
     private readonly List<BodyPartCombo> bodyParts = new List<BodyPartCombo>();
 
     private bool isLerpingBack = false;
-    
+
+    private Rigidbody2D root;
+
     void Start()
     {
         var spriteSkins = GetComponentsInChildren<SpriteSkin>();
@@ -41,12 +44,17 @@ public class RagdollToggle : MonoBehaviour
             var joint = skin.gameObject.GetComponent<HingeJoint2D>();
 
             body.simulated = false;
-            
-            var obj = new BodyPartCombo
+
+            if (body.gameObject.name == "Pelvis")
+            {
+                root = body;
+            }
+
+            var part = new BodyPartCombo
             {
                 GameObject = skin.gameObject,
 
-                RigidBody = body,
+                Body = body,
                 BodyPosition = body.position,
                 BodyAngle = body.rotation,
 
@@ -57,11 +65,21 @@ public class RagdollToggle : MonoBehaviour
                 Joint = joint,
                 Collider = skin.gameObject.GetComponent<Collider2D>()
             };
-            bodyParts.Add(obj);
+            bodyParts.Add(part);
         }
     }
 
-    public void Toggle(Action outerToggle = null)
+    //void Update()
+    //{
+    //    if (isOn || isLerpingBack) return;
+    //    foreach (var part in bodyParts)
+    //    {
+    //        part.BodyPosition = part.Body.position;
+    //        part.BodyAngle = part.Body.rotation;
+    //    }
+    //}
+
+    public void Toggle(Action outerToggle = null, Action<Vector2> setOuterPosition = null)
     {
         if (isLerpingBack) return;
 
@@ -72,7 +90,7 @@ public class RagdollToggle : MonoBehaviour
         if (!isOn)
         {
             isLerpingBack = true;
-            StartCoroutine(LerpBack(outerToggle));
+            StartCoroutine(LerpBack(outerToggle, setOuterPosition));
         }
         else
         {
@@ -80,12 +98,12 @@ public class RagdollToggle : MonoBehaviour
             foreach (var bp in bodyParts)
             {
                 bp.Skin.enabled = false;
-                bp.RigidBody.simulated = true;
+                bp.Body.simulated = true;
             }
         }
     }
 
-    private IEnumerator LerpBack(Action outerToggle = null)
+    private IEnumerator LerpBack(Action outerToggle = null, Action<Vector2> setOuterPosition = null)
     {
         var duration = 0.25f;
         var current = Time.time;
@@ -93,21 +111,25 @@ public class RagdollToggle : MonoBehaviour
 
         foreach (var bp in bodyParts)
         {
-            bp.RigidBody.gravityScale = 0;
-            bp.EndSimBodyAngle = bp.RigidBody.rotation;
-            bp.EndSimBodyPosition = bp.RigidBody.position;
-        }
+            bp.Body.gravityScale = 0;
+            bp.EndSimBodyAngle = bp.Body.rotation;
+            bp.EndSimBodyPosition = bp.Body.position;
 
+            Debug.Log($"{bp.GameObject.name} starts at {bp.EndSimBodyPosition} ({bp.EndSimBodyAngle}) back to {bp.BodyPosition} ({bp.BodyAngle})");
+        }
+        
         while (current < end)
         {
             var t = (duration - (end - current)) / duration;
 
             foreach (var bp in bodyParts)
             {
-                bp.RigidBody.position = Vector2.Lerp(bp.EndSimBodyPosition, bp.BodyPosition, t);
-                bp.RigidBody.rotation = Mathf.Lerp(bp.EndSimBodyAngle, bp.BodyAngle, t);
+                bp.Body.position = Vector2.Lerp(bp.EndSimBodyPosition, bp.BodyPosition, t);
+                bp.Body.rotation = Mathf.Lerp(bp.EndSimBodyAngle, bp.BodyAngle, t);
             }
 
+            setOuterPosition?.Invoke(new Vector2(root.position.x, 2));
+            
             yield return new WaitForNextFrameUnit();
 
             current = Time.time;
@@ -115,8 +137,10 @@ public class RagdollToggle : MonoBehaviour
 
         foreach (var bp in bodyParts)
         {
-            bp.RigidBody.simulated = false;
-            bp.RigidBody.gravityScale = 1;
+            bp.Body.position = bp.BodyPosition;
+            bp.Body.rotation = bp.BodyAngle;
+            bp.Body.simulated = false;
+            bp.Body.gravityScale = 1;
             bp.Skin.enabled = true;
         }
 

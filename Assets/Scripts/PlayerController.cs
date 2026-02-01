@@ -15,11 +15,15 @@ public class PlayerController : MonoBehaviour
     public Vector2 direction;
     public Vector2 addForce;
 
+    private Animator animator;
+
     private Rigidbody2D body;
     private RagdollToggle ragdollToggle;
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
+
         body = GetComponent<Rigidbody2D>();
 
         ragdollToggle = GetComponentInChildren<RagdollToggle>();
@@ -37,6 +41,9 @@ public class PlayerController : MonoBehaviour
             ragdollToggle.Toggle(() =>
             {
                 body.simulated = !ragdollToggle.IsOn;
+            }, (pos) =>
+            {
+                //transform.position = new Vector2(pos.x, transform.position.y);
             });
         }
     }
@@ -49,5 +56,6 @@ public class PlayerController : MonoBehaviour
         currentForce = body.totalForce;
         currentVelocity = body.velocity;
 
+        animator.SetFloat("xVelocity", body.velocity.x);
     }
 }
