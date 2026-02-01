@@ -499,7 +499,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 383918672
+      path: 4252147332
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -508,7 +508,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 283263248
+      path: 4218617284
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -517,7 +517,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3242449498
+      path: 718497422
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -526,7 +526,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3343104282
+      path: 752027086
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -535,7 +535,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3982305108
+      path: 2156046929
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -544,7 +544,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 127402201
+      path: 318168915
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -553,7 +553,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 383918672
+      path: 4252147332
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -562,7 +562,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 283263248
+      path: 4218617284
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -571,7 +571,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3242449498
+      path: 718497422
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -580,7 +580,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3343104282
+      path: 752027086
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -589,7 +589,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3982305108
+      path: 2156046929
       attribute: 4
       script: {fileID: 0}
       typeID: 4

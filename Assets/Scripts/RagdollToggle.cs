@@ -124,7 +124,7 @@ public class RagdollToggle : MonoBehaviour
         }
     }
 
-    public void Toggle(Action outerToggle = null, Action<Vector2> setOuterPosition = null)
+    public void Toggle(Action outerToggle = null)
     {
         if (isLerpingBack) return;
 
@@ -133,7 +133,7 @@ public class RagdollToggle : MonoBehaviour
         if (!isOn)
         {
             isLerpingBack = true;
-            StartCoroutine(LerpBack(outerToggle, setOuterPosition));
+            StartCoroutine(LerpBack(outerToggle));
         }
         else
         {
@@ -155,7 +155,7 @@ public class RagdollToggle : MonoBehaviour
         }
     }
 
-    private IEnumerator LerpBack(Action outerToggle = null, Action<Vector2> setOuterPosition = null)
+    private IEnumerator LerpBack(Action outerToggle = null)
     {
         var duration = 0.25f;
         var current = Time.time;
