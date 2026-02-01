@@ -6,6 +6,8 @@ public class KeybordInputSource : InputSource
     public KeyCode Forwards;
     public KeyCode Backwards;
     public KeyCode GrabThrowAction;
+    public KeyCode PunchAction;
+
     public override void Update()
     {
         DirectionInput = new Vector2
@@ -17,6 +19,10 @@ public class KeybordInputSource : InputSource
         if (Input.GetKey(GrabThrowAction))
         {
             ActionInput = FighterAction.GrabThrow;
+        }
+        else if (Input.GetKey(PunchAction))
+        {
+            ActionInput = FighterAction.Punch;
         }
         else
         {

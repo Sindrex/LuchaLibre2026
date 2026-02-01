@@ -124,6 +124,15 @@ public class RagdollToggle : MonoBehaviour
         }
     }
 
+    public void Shift(Vector2 vector)
+    {
+        foreach (var part in bodyParts)
+        {
+            part.AnimatedBodyPosition += vector;
+            part.AnimatedBodyAngle = part.InitialBodyAngle;
+        }
+    }
+
     public void Toggle(Action outerToggle = null)
     {
         if (isLerpingBack) return;
