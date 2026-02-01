@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -14,6 +15,9 @@ public class RagdollToggle : MonoBehaviour
         public HingeJoint2D Joint { get; set; }
         public Rigidbody2D Body { get; set; }
         public Collider2D Collider { get; set; }
+
+        public Vector2 TransformPosition { get; set; }
+        public float TransformAngle { get; set; }
 
         public Vector2 BodyPosition { get; set; }
         public float BodyAngle { get; set; }
@@ -37,6 +41,8 @@ public class RagdollToggle : MonoBehaviour
 
     void Start()
     {
+        var log = new StringBuilder();
+
         var spriteSkins = GetComponentsInChildren<SpriteSkin>();
         foreach (var skin in spriteSkins)
         {
@@ -50,9 +56,14 @@ public class RagdollToggle : MonoBehaviour
                 root = body;
             }
 
+            log.AppendLine($"{body.gameObject.name} starts at {body.position} ({body.rotation})");
+
             var part = new BodyPartCombo
             {
                 GameObject = skin.gameObject,
+
+                TransformPosition = body.transform.position,
+                TransformAngle = body.transform.rotation.z,
 
                 Body = body,
                 BodyPosition = body.position,
@@ -67,6 +78,8 @@ public class RagdollToggle : MonoBehaviour
             };
             bodyParts.Add(part);
         }
+
+        Debug.Log(log.ToString());
     }
 
     //void Update()
@@ -109,15 +122,19 @@ public class RagdollToggle : MonoBehaviour
         var current = Time.time;
         var end = current + duration;
 
+        var log = new StringBuilder();
+
         foreach (var bp in bodyParts)
         {
             bp.Body.gravityScale = 0;
             bp.EndSimBodyAngle = bp.Body.rotation;
             bp.EndSimBodyPosition = bp.Body.position;
 
-            Debug.Log($"{bp.GameObject.name} starts at {bp.EndSimBodyPosition} ({bp.EndSimBodyAngle}) back to {bp.BodyPosition} ({bp.BodyAngle})");
+            log.AppendLine($"{bp.GameObject.name} to lerp back from {bp.EndSimBodyPosition} ({bp.EndSimBodyAngle}) to {bp.BodyPosition} ({bp.BodyAngle})");
         }
-        
+
+        Debug.Log(log.ToString());
+
         while (current < end)
         {
             var t = (duration - (end - current)) / duration;
