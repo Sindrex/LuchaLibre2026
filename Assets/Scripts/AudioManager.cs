@@ -10,7 +10,16 @@ using UnityEngine.Audio;
 public enum AudioLabel
 {
     ThemeMusic, FightSFX, BellSFX, PickCharacterVoice, VictoryVoice,
-    SwapMenuSFX, PunchSFX, JumpSFX
+    SwapMenuSFX, 
+    Punch1SFX, Punch2SFX, Punch3SFX, Punch4SFX,
+    Character1Throw, Character2Throw,
+    Character1Ouch1, Character1Ouch2, Character1Ouch3,
+    Character2Ouch1, Character2Ouch2, Character2Ouch3,
+    Character1Voice1, Character1Voice2, Character1Voice3,
+    Character1VoiceWin, Character1VoiceLoss,
+    Character2Voice1, Character2Voice2, Character2Voice3, 
+    Character2VoiceWin, Character2VoiceLoss,
+    UnmaskHimSFX, MaskalitySFX, ApplauseSFX
 }
 
 [Serializable]
