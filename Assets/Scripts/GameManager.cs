@@ -251,15 +251,20 @@ public class GameManager : MonoBehaviour
         if(Player1RoundsWon > Player2RoundsWon)
         {
             Player1Wins.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySFXClip(AudioLabel.Character1VoiceWin);
+            AudioManager.Instance.PlaySFXClip(AudioLabel.Character2VoiceLoss);
         }
         else
         {
             Player2Wins.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySFXClip(AudioLabel.Character2VoiceWin);
+            AudioManager.Instance.PlaySFXClip(AudioLabel.Character1VoiceLoss);
         }
 
         AudioManager.Instance.PlaySFXClip(AudioLabel.VictoryVoice);
         AudioManager.Instance.PlaySFXClip(AudioLabel.ApplauseSFX);
         AudioManager.Instance.PlaySFXClip(AudioLabel.ApplauseSFX);
+
         Maskality.SetActive(false);
         Restart.SetActive(true);
         IsInMaskality = false;
