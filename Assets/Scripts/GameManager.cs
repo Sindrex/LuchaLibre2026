@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject UnmaskHim;
     public TMP_Text Timer;
     private float TimerTicker;
+
+    //Players
     public GameObject Player1HPObject;
     public GameObject Player1HPObjectHP;
     public GameObject Player2HPObject;
@@ -20,8 +22,12 @@ public class GameManager : MonoBehaviour
     public List<int> PlayerHPWidths;
     public GameObject Player1Wins;
     public GameObject Player2Wins;
+    public List<GameObject> Player1WinObjects;
+    public List<GameObject> Player2WinObjects;
+
     public GameObject Restart;
 
+    //Rounds
     public int CurrentRound;
     public int MaxRound;
     public float NextRoundWaitSeconds;
@@ -63,6 +69,14 @@ public class GameManager : MonoBehaviour
         Restart.SetActive(false);
         Player1Wins.SetActive(false);
         Player2Wins.SetActive(false);
+        foreach(var go in Player1WinObjects)
+        {
+            go.SetActive(false);
+        }
+        foreach(var go in Player2WinObjects)
+        {
+            go.SetActive(false);
+        }
 
         CurrentRound = 0;
         IsInFight = false;
@@ -85,9 +99,9 @@ public class GameManager : MonoBehaviour
 
             //set HP width
             var player1HPwidth = PlayerHPWidths[Player1HP];
-            Player1HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player1HPwidth, 40);
+            Player1HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player1HPwidth, 15);
             var player2HPwidth = PlayerHPWidths[Player2HP];
-            Player2HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player2HPwidth, 40);
+            Player2HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player2HPwidth, 15);
 
             //Round ends by timer
             TimerTicker -= Time.deltaTime;
@@ -152,10 +166,12 @@ public class GameManager : MonoBehaviour
     {
         if(Player1HP > Player2HP)
         {
+            Player1WinObjects[Player1RoundsWon].SetActive(true);
             Player1RoundsWon++;
         }
         else
         {
+            Player2WinObjects[Player2RoundsWon].SetActive(true);
             Player2RoundsWon++;
         }
 
