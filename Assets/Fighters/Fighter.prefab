@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15346fa30a122448b36489b8c970438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  opponent: {fileID: 0}
   rootSprite: {fileID: 4786266136358292036}
   inputSource: {fileID: 0}
   acceleration: 25
@@ -518,6 +519,7 @@ MonoBehaviour:
   currentVelocity: {x: 0, y: 0}
   direction: {x: 0, y: 0}
   addForce: {x: 0, y: 0}
+  pelvisForce: {x: 0, y: 0}
 --- !u!50 &2209744599131221486
 Rigidbody2D:
   serializedVersion: 4
@@ -2364,17 +2366,17 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.03843367, y: -0.22431242}
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: -0.098433614, y: -0.18568754}
+  m_ConnectedAnchor: {x: -0.06, y: -0.41}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -45
-    m_UpperAngle: 45
+    m_LowerAngle: -25
+    m_UpperAngle: 25
 --- !u!114 &960568771453506095
 MonoBehaviour:
   m_ObjectHideFlags: 0
