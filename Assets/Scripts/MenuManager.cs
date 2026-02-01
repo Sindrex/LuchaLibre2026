@@ -115,7 +115,7 @@ public class MenuManager : MonoBehaviour
                 MenuObject.SetActive(false);
 
                 IsInGame = true;
-                GameManager.Instance.StartGame();
+                GameManager.Instance.StartGame(Player1Character1, Player2Character1);
             }
         }
     }
