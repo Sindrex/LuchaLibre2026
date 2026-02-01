@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 direction;
     public Vector2 addForce;
+    public Vector2 pelvisForce;
 
     private Animator animator;
 
@@ -25,12 +27,14 @@ public class PlayerController : MonoBehaviour
 
     private FighterAction currentAction = FighterAction.None;
     private bool actionInProgress = false;
+    private Rigidbody2D pelvisBody;
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         body = GetComponent<Rigidbody2D>();
         ragdollToggle = GetComponentInChildren<RagdollToggle>();
+        pelvisBody = rootSprite.transform.Find("Pelvis").GetComponent<Rigidbody2D>();
 
         opponent = FindObjectsOfType<PlayerController>().FirstOrDefault(x => x != this);
     }
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
             if (Vector2.Distance(transform.position, opponent.transform.position) < 2f)
             {
                 // TODO: Check if opponent is blocking
+                Debug.Log($"{name} attacks {opponent.name}");
 
                 actionInProgress = true;
                 currentAction = inputSource.ActionInput;
@@ -57,6 +62,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                Debug.Log($"{name} is too far away");
+
                 actionInProgress = true;
                 currentAction = Enum.Parse<FighterAction>(inputSource.ActionInput.ToString() + "Miss");
                 animator.SetTrigger(currentAction.ToString());
@@ -79,7 +86,18 @@ public class PlayerController : MonoBehaviour
 
     private void ReceiveAction(FighterAction receivedAction)
     {
-        Debug.Log("Should receive action " + receivedAction);
+        Debug.Log(name + " should receive action " + receivedAction);
+
+        if (receivedAction == FighterAction.GrabThrow)
+        {
+            StartThrown();
+        }
+    }
+
+    private void StartThrown()
+    {
+        animator.SetTrigger("Thrown");
+        actionInProgress = true;
     }
 
     private void FixedUpdate()
@@ -90,15 +108,27 @@ public class PlayerController : MonoBehaviour
         currentForce = body.totalForce;
         currentVelocity = body.velocity;
 
-        animator.SetFloat("xVelocity", body.velocity.x);
+        if (!actionInProgress)
+        {
+            animator.SetFloat("xVelocity", body.velocity.x * transform.localScale.x);
+        }
+
+        if (pelvisForce != Vector2.zero)
+        {
+            pelvisBody.AddForce(pelvisForce, ForceMode2D.Impulse);
+            pelvisForce = Vector2.zero;
+        }
     }
 
     public void Done()
     {
+        Debug.Log($"{name} done with action");
+
         if (actionInProgress)
         {
             actionInProgress = false;
             currentAction = FighterAction.None;
+            Debug.Log($"{name} reset state");
         }
     }
 
@@ -110,5 +140,55 @@ public class PlayerController : MonoBehaviour
     public void Throw()
     {
         Debug.Log($"{gameObject.name} throws opponent");
+    }
+
+    public void Ragdoll()
+    {
+        Debug.Log(name + " Received Ragdoll trigger");
+
+        foreach (var child in rootSprite.GetComponentsInChildren<Collider2D>())
+        {
+            foreach (var otherChild in opponent.rootSprite.GetComponentsInChildren<Collider2D>())
+            {
+                Physics2D.IgnoreCollision(child, otherChild, true);
+            }
+        }
+
+        ragdollToggle.Toggle(() =>
+        {
+            body.simulated = !ragdollToggle.IsOn;
+        });
+
+        pelvisForce = new Vector2(transform.localScale.x * -50, 0);
+        Debug.Log($"Added full force");
+
+        StartCoroutine(FlyABitAndGetUp());
+    }
+
+    private IEnumerator FlyABitAndGetUp()
+    {
+        yield return new WaitForFixedUpdate();
+
+        while (pelvisBody.velocity.magnitude > .1f)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        ragdollToggle.Toggle(() =>
+        {
+            body.simulated = !ragdollToggle.IsOn;
+        });
+
+        foreach (var child in rootSprite.GetComponentsInChildren<Collider2D>())
+        {
+            foreach (var otherChild in opponent.rootSprite.GetComponentsInChildren<Collider2D>())
+            {
+                Physics2D.IgnoreCollision(child, otherChild, false);
+            }
+        }
+
+        Debug.Log($"{name} got back up");
+
+        actionInProgress = false;
     }
 }
