@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c2f2bbd99df023343aae22c8377f8687
+guid: df1ea919c1a32d34cb48d984b3f15d96
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639055560795813496
+  platformSettingsDirtyTick: 639055560891602717
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,18 +122,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: NashoLibre_Logo
+  - name: UnmaskHim
     originalName: 
-    pivot: {x: 0.73333335, y: -2.1235955}
+    pivot: {x: 0.69916433, y: -3}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 390
-      height: 89
-    spriteID: 6723971e6112a5f4eb06be9345ce5ed1
+      width: 359
+      height: 57
+    spriteID: 5938879d84b45a3479713c8fdec159ee
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,25 +146,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1931742351
+      value0: 1875297395
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: NashoLibre_Logo
+    name: UnmaskHim
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: NashoLibre_Logo
+    - name: UnmaskHim
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 2
-        y: 189
-        width: 390
-        height: 89
-      spriteId: 6723971e6112a5f4eb06be9345ce5ed1
+        x: 37
+        y: 171
+        width: 359
+        height: 57
+      spriteId: 5938879d84b45a3479713c8fdec159ee
     linkedCells: []
     parentIndex: -1
   platformSettings:

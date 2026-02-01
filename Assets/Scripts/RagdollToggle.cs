@@ -56,7 +56,7 @@ public class RagdollToggle : MonoBehaviour
 
     void Start()
     {
-        shouldLog = transform.parent.name == "Fighter A";
+        shouldLog = false; // transform.parent.name == "Fighter A";
 
         var log = new StringBuilder();
 

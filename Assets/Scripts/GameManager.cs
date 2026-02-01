@@ -117,17 +117,17 @@ public class GameManager : MonoBehaviour
         //TEST
         if (InputController.GetInput(InputPurpose.P1_PUNCH_1))
         {
-            Player2HP--;
+            Player2HP -= 10;
         }
         if (InputController.GetInput(InputPurpose.P2_PUNCH_1))
         {
-            Player1HP--;
+            Player1HP -= 10;
         }
 
         //set HP width
-        var player1HPwidth = PlayerHPWidths[Player1HP];
+        var player1HPwidth = PlayerHPWidths[Player1HP/10];
         Player1HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player1HPwidth, 15);
-        var player2HPwidth = PlayerHPWidths[Player2HP];
+        var player2HPwidth = PlayerHPWidths[Player2HP/10];
         Player2HPObjectHP.GetComponent<RectTransform>().sizeDelta = new Vector2(player2HPwidth, 15);
 
         //Round ends by timer
@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator EndGameWait()
     {
-        yield return new WaitForSeconds(FightWaitSeconds);
+        yield return new WaitForSeconds(NextRoundWaitSeconds);
         if(Player1RoundsWon > Player2RoundsWon)
         {
             Player1Wins.gameObject.SetActive(true);
